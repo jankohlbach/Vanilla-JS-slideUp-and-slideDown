@@ -2,12 +2,11 @@
   const activeClass = 'open';
 
   const getHeight = (element) => {
-    const clone = element.cloneNode(true);
-    clone.setAttribute('style', 'visibility: hidden; display: block; margin: -999px 0;');
-    const height = element.parentNode.appendChild(clone).clientHeight;
-    const { paddingTop } = getComputedStyle(clone);
-    const { paddingBottom } = getComputedStyle(clone);
-    element.parentNode.removeChild(clone);
+    element.setAttribute('style', 'display: block;');
+    const height = element.clientHeight;
+    const { paddingTop } = getComputedStyle(element);
+    const { paddingBottom } = getComputedStyle(element);
+    element.setAttribute('style', 'display: none;');
     return {
       height,
       paddingTop,
@@ -21,7 +20,7 @@
     }
 
     const dimensions = getHeight(element);
-    const { height } = dimensions;
+    const height = parseInt(dimensions.height, 10);
     const paddingT = parseInt(dimensions.paddingTop, 10);
     const paddingB = parseInt(dimensions.paddingBottom, 10);
     const time = height / 3 + 150;
@@ -53,7 +52,7 @@
   };
 
   const slideUp = (element) => {
-    const height = element.clientHeight;
+    const height = parseInt(element.clientHeight, 10);
     const paddingT = parseInt(getComputedStyle(element).paddingTop, 10);
     const paddingB = parseInt(getComputedStyle(element).paddingBottom, 10);
     const time = height / 3 + 150;
