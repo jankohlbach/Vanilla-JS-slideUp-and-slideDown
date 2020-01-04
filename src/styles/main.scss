@@ -29,67 +29,67 @@ body {
   width: 500px;
   margin: 100px 50px;
 
+  &-head {
+    position: relative;
+    padding: 10px 20px;
+    padding-right: 50px;
+    border: 2px solid $color-theme-light;
+    border-top: none;
+    border-right: none;
+    color: $color-theme-light;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 40%;
+      right: 20px;
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      border: 2px solid $color-theme-light;
+      border-bottom: none;
+      border-left: none;
+      transform: rotate(135deg);
+      transition: transform .3s;
+    }
+  }
+
+  &-body {
+    display: none;
+    padding: 20px;
+    color: $color-theme-light;
+
+    > * + * {
+      margin-top: 10px;
+    }
+  }
+
+  &-foot {
+    position: relative;
+    padding-right: 30px;
+    cursor: pointer;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 40%;
+      right: 5px;
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border: 2px solid $color-theme-light;
+      border-bottom: none;
+      border-left: none;
+      transform: rotate(315deg);
+    }
+  }
+
   &.open {
     .toggle-head {
       &::after {
         transform: rotate(315deg);
       }
     }
-  }
-}
-
-.toggle-head {
-  position: relative;
-  padding: 10px 20px;
-  padding-right: 50px;
-  border: 2px solid $color-theme-light;
-  border-top: none;
-  border-right: none;
-  color: $color-theme-light;
-  cursor: pointer;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 40%;
-    right: 20px;
-    display: inline-block;
-    width: 15px;
-    height: 15px;
-    border: 2px solid $color-theme-light;
-    border-bottom: none;
-    border-left: none;
-    transform: rotate(135deg);
-    transition: transform .3s;
-  }
-}
-
-.toggle-body {
-  display: none;
-  padding: 20px;
-  color: $color-theme-light;
-
-  > * + * {
-    margin-top: 10px;
-  }
-}
-
-.toggle-foot {
-  position: relative;
-  padding-right: 30px;
-  cursor: pointer;
-
-  &::after {
-    content: '';
-    position: absolute;
-    top: 40%;
-    right: 5px;
-    display: inline-block;
-    width: 10px;
-    height: 10px;
-    border: 2px solid $color-theme-light;
-    border-bottom: none;
-    border-left: none;
-    transform: rotate(315deg);
   }
 }

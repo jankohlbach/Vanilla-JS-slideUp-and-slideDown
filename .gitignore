@@ -1,0 +1,6 @@
+#compiled files
+dist/res/styles/*
+dist/res/scripts/*
+
+#TODO file
+TODO

@@ -1,39 +1,31 @@
 (() => {
-  const activeClass = 'open';
+  const ACTIVE_CLASS = 'open';
 
   const getHeight = (element) => {
-    element.setAttribute('style', 'display: block;');
-    const height = element.clientHeight;
-    const { paddingTop } = getComputedStyle(element);
-    const { paddingBottom } = getComputedStyle(element);
-    element.setAttribute('style', 'display: none;');
-    return {
-      height,
-      paddingTop,
-      paddingBottom,
-    };
+    let { height, paddingTop, paddingBottom } = getComputedStyle(element);
+    height = parseInt(height, 10);
+    paddingTop = parseInt(paddingTop, 10);
+    paddingBottom = parseInt(paddingBottom, 10);
+    return { height, paddingTop, paddingBottom };
   };
 
+  const setTime = height => height / 3 + 150;
+
   const slideDown = (element) => {
-    if (element.parentNode.classList.contains(activeClass)) {
-      return;
-    }
+    element.setAttribute('style', 'display: block;');
+    const { height, paddingTop, paddingBottom } = getHeight(element);
+    element.setAttribute('style', 'display: none;');
+    const time = setTime(height);
 
-    const dimensions = getHeight(element);
-    const height = parseInt(dimensions.height, 10);
-    const paddingT = parseInt(dimensions.paddingTop, 10);
-    const paddingB = parseInt(dimensions.paddingBottom, 10);
-    const time = height / 3 + 150;
-
-    element.parentNode.classList.add(activeClass);
+    element.parentNode.classList.add(ACTIVE_CLASS);
     element.setAttribute('style', 'overflow: hidden; display: block; padding-top: 0; padding-bottom: 0;');
 
     const initTime = new Date().getTime();
     const repeat = () => {
       const newTime = new Date().getTime() - initTime;
       const step = 0 + height * newTime / time;
-      const stepPaddingT = 0 + (paddingT * newTime / time);
-      const stepPaddingB = 0 + (paddingB * newTime / time);
+      const stepPaddingT = 0 + (paddingTop * newTime / time);
+      const stepPaddingB = 0 + (paddingBottom * newTime / time);
 
       if (newTime <= time) {
         element.setAttribute('style', `overflow: hidden; display: block; padding-top: ${stepPaddingT}px; padding-bottom: ${stepPaddingB}px; height: ${step}px`);
@@ -52,20 +44,18 @@
   };
 
   const slideUp = (element) => {
-    const height = parseInt(element.clientHeight, 10);
-    const paddingT = parseInt(getComputedStyle(element).paddingTop, 10);
-    const paddingB = parseInt(getComputedStyle(element).paddingBottom, 10);
-    const time = height / 3 + 150;
+    const { height, paddingTop, paddingBottom } = getHeight(element);
+    const time = setTime(height);
 
-    element.parentNode.classList.remove(activeClass);
+    element.parentNode.classList.remove(ACTIVE_CLASS);
     element.setAttribute('style', 'overflow: hidden; display: block; padding-top: 0; padding-bottom: 0;');
 
     const initTime = new Date().getTime();
     const repeat = () => {
       const newTime = new Date().getTime() - initTime;
       const step = height + -height * newTime / time;
-      const stepPaddingT = paddingT + (-paddingT * newTime / time);
-      const stepPaddingB = paddingB + (-paddingB * newTime / time);
+      const stepPaddingT = paddingTop + (-paddingTop * newTime / time);
+      const stepPaddingB = paddingBottom + (-paddingBottom * newTime / time);
 
       if (newTime <= time) {
         element.setAttribute('style', `overflow: hidden; display: block; padding-top: ${stepPaddingT}px; padding-bottom: ${stepPaddingB}px; height: ${step}px`);
@@ -86,7 +76,7 @@
   const toggleHeads = document.querySelectorAll('.toggle-head');
   toggleHeads.forEach((toggleHead) => {
     toggleHead.addEventListener('click', () => {
-      if (!toggleHead.parentNode.classList.contains(activeClass)) {
+      if (!toggleHead.parentNode.classList.contains(ACTIVE_CLASS)) {
         slideDown(toggleHead.nextElementSibling);
       } else {
         slideUp(toggleHead.nextElementSibling);
@@ -100,4 +90,4 @@
       slideUp(toggleFoot.parentNode);
     });
   });
-}).call(this);
+})();
